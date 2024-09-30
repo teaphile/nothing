@@ -1,1 +1,1 @@
-# nothing
+This repository contains C code simulations designed to model various real-world phenomena. Each simulation demonstrates specific algorithms or concepts, providing a hands-on understanding of their underlying principles. To run these simulations, ensure you have a C compiler installed. Clone this repository, navigate to the desired simulation folder, and compile the C file using a command like 'gcc simulation.c -o simulation'. Then, execute the compiled program to observe the simulation's output.
