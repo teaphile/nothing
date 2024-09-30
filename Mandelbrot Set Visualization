@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <complex.h>
+
+int main() {
+    int width = 800, height = 600;
+    double xmin = -2.5, xmax = 1.5, ymin = -1.5, ymax = 1.5;
+    int max_iter = 1000;
+
+    // Allocate memory for the image data
+    int *image = (int *)malloc(width * height * sizeof(int));
+
+    // Iterate over each pixel
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            double c_real = xmin + x * (xmax - xmin) / width;
+            double c_imag = ymin + y * (ymax - ymin) / height;
+            complex double c = c_real + I * c_imag;
+            complex double z = 0;
+
+            int iter;
+            for (iter = 0; iter < max_iter; iter++) {
+                z = z * z + c;
+                if (cabs(z) > 2) {
+                    break;
+                }
+            }
+
+            // Color the pixel based on the number of iterations
+            image[y * width + x] = iter;
+        }
+    }
+
+    // Save the image (replace "mandelbrot.ppm" with your desired filename)
+    FILE *fp = fopen("mandelbrot.ppm", "w");
+    fprintf(fp, "P3\n%d %d\n255\n", width, height);
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            int color = image[y * width + x];
+            fprintf(fp, "%d %d %d ", color, color, color);
+        }
+        fprintf(fp, "\n");
+    }
+    fclose(fp);
+
+    free(image);
+    return 0;
+}
+
+
+Explanation:
+ * Initialization: Sets the image size, viewing window, and maximum iterations.
+ * Memory Allocation: Allocates memory for the image data.
+ * Pixel Iteration: Iterates over each pixel in the image.
+ * Mandelbrot Calculation: Calculates the Mandelbrot set value for the current pixel.
+ * Coloring: Colors the pixel based on the number of iterations.
+ * Image Saving: Saves the image in PPM format.
+ * Cleanup: Frees the allocated memory.
+Challenges and Considerations:
+ * Computational Intensity: Rendering high-resolution Mandelbrot sets can be computationally expensive. Consider using parallel processing techniques or optimizing the code for performance.
+ * Floating-Point Precision: Be aware of floating-point precision issues, especially when dealing with large numbers of iterations.
+ * Memory Management: For very large images, memory management can be a challenge. Consider using techniques like virtual memory or memory-mapped files.
+ * Visualization: Experiment with different color schemes and visualization techniques to enhance the visual appeal of the Mandelbrot set.
