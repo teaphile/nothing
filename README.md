@@ -1,1 +1,1 @@
-# nothing
+https://teaphile.github.io/nothing/
