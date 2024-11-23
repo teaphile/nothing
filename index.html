@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nothing is Here</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin: 0;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group button:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 12px;
+      color: #777;
+    }
+
+    /* For responsive design on smaller screens */
+    @media (max-width: 600px) {
+      .container {
+        padding: 15px;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group button {
+        font-size: 14px;
+      }
+    }
+    
+    /* Resize search input box to adjust with screen size */
+    .form-group input {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h1>Nothing is Here</h1>
+    </div>
+
+    <div class="form-group">
+      <input type="text" id="search-input" placeholder="Type your query..." />
+    </div>
+
+    <div class="form-group">
+      <select id="file-type">
+        <option value="all">All</option>
+        <option value="audio">Audio (mp3, wav, flac, etc.)</option>
+        <option value="video">Video (mp4, mkv, avi, etc.)</option>
+        <option value="image">Images (jpg, png, gif, etc.)</option>
+        <option value="document">Documents (pdf, doc, txt, etc.)</option>
+        <option value="archive">Archives (zip, rar, 7z, etc.)</option>
+        <option value="software">Software (exe, apk, iso, etc.)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <button id="search-button">Search</button>
+    </div>
+
+    <div class="footer">
+      <p>Search powered by <strong>Nothing is Here</strong></p>
+    </div>
+  </div>
+
+  <script>
+    // Map of file types to their extensions (limited to avoid Google query limit)
+    const fileExtensions = {
+      audio: "mp3|wav|flac|aac|ogg",
+      video: "mp4|mkv|avi|mov",
+      image: "png|jpg|jpeg|gif|tiff",
+      document: "pdf|doc|docx|xls|xlsx|ppt|pptx",
+      archive: "zip|rar|tar|7z|gz",
+      software: "exe|apk|iso|dll|msi"
+    };
+
+    // Function to build the search query with the selected file type
+    document.getElementById('search-button').addEventListener('click', () => {
+      const query = document.getElementById('search-input').value;
+      const fileType = document.getElementById('file-type').value;
+
+      if (!query) {
+        alert("Please enter a search query!");
+        return;
+      }
+
+      // Build the file extension part based on selected file type
+      let extensions = "";
+      if (fileType !== "all") {
+        extensions = `(${fileExtensions[fileType]})`;
+      }
+
+      // Updated Google search query
+      const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(query)} -inurl:(jsp|pl|php|html|aspx|htm|cf|shtml|asp|cgi|cfm|py|do|action|ini|conf|xml) intitle:index.of ${extensions}`;
+      window.location.href = googleUrl;
+    });
+
+    // Allow pressing Enter to trigger the search
+    document.getElementById('search-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        document.getElementById('search-button').click();
+      }
+    });
+  </script>
+</body>
+</html>
